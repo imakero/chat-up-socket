@@ -1,0 +1,13 @@
+{
+  "name": "@chat-up-socket/shared",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "devDependencies": {},
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
