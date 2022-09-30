@@ -6,6 +6,7 @@ import {
   ServerToClientEvents,
   ClientToServerEvents,
 } from "@chat-up-socket/shared"
+import { ChakraProvider } from "@chakra-ui/react"
 
 const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(
   "ws://localhost:4000"
@@ -14,6 +15,8 @@ const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement)
 root.render(
   <React.StrictMode>
-    <App socket={socket} />
+    <ChakraProvider>
+      <App socket={socket} />
+    </ChakraProvider>
   </React.StrictMode>
 )

@@ -56,32 +56,30 @@ function App({ socket }: AppProps) {
   }
 
   return (
-    <ChakraProvider>
-      <Container size="xl" height="100vh" py={4}>
-        <VStack height="100%" alignItems="start">
-          <Heading>Welcome {name}</Heading>
-          <VStack height="100%">
-            {messages.map((message, index) => (
-              <Text key={index}>{message}</Text>
-            ))}
-          </VStack>
-          <form onSubmit={handleSubmit}>
-            <HStack>
-              <FormControl>
-                <FormLabel>Send a message</FormLabel>
-                <Input
-                  type="text"
-                  value={message}
-                  onChange={(event) => setMessage(event.target.value)}
-                />
-                <FormHelperText>Don't be rude!</FormHelperText>
-              </FormControl>
-              <Button type="submit">send</Button>
-            </HStack>
-          </form>
+    <Container size="xl" height="100vh" py={4}>
+      <VStack height="100%" alignItems="start">
+        <Heading>Welcome {name}</Heading>
+        <VStack height="100%">
+          {messages.map((message, index) => (
+            <Text key={index}>{message}</Text>
+          ))}
         </VStack>
-      </Container>
-    </ChakraProvider>
+        <form onSubmit={handleSubmit}>
+          <HStack>
+            <FormControl>
+              <FormLabel>Send a message</FormLabel>
+              <Input
+                type="text"
+                value={message}
+                onChange={(event) => setMessage(event.target.value)}
+              />
+              <FormHelperText>Don't be rude!</FormHelperText>
+            </FormControl>
+            <Button type="submit">send</Button>
+          </HStack>
+        </form>
+      </VStack>
+    </Container>
   )
 }
 
