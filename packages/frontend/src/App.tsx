@@ -32,6 +32,10 @@ function App({ socket }: AppProps) {
       setMessages((messages) => [...messages, message])
     })
 
+    socket.on("connect_error", (error) => {
+      setMessages((messages) => [...messages, error.message])
+    })
+
     const anyListener = (event: any, ...args: any) => {
       console.log("onAny: \n", event, args)
       console.log(socket.id)
@@ -43,6 +47,7 @@ function App({ socket }: AppProps) {
 
     return () => {
       socket.off("chatMessage")
+      socket.off("connect_error")
       socket.offAny(anyListener)
     }
   }, [socket])
