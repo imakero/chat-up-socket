@@ -10,24 +10,18 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react"
-import { useEffect, useState } from "react"
-import { Socket } from "socket.io-client"
-import {
-  ServerToClientEvents,
-  ClientToServerEvents,
-} from "@chat-up-socket/shared"
+import { useContext, useEffect, useState } from "react"
+import { SocketContext } from "../context/SocketContext"
 
-type AppProps = {
-  socket: Socket<ServerToClientEvents, ClientToServerEvents>
-}
-
-function App({ socket }: AppProps) {
+function App() {
   const [name, setName] = useState<string>("Anonymous")
   const [message, setMessage] = useState<string>("")
   const [messages, setMessages] = useState<string[]>([])
+  const socket = useContext(SocketContext)
 
   useEffect(() => {
     console.log("running effect")
+
     socket.on("chatMessage", ({ message }) => {
       setMessages((messages) => [...messages, message])
     })
@@ -55,7 +49,7 @@ function App({ socket }: AppProps) {
   const handleSubmit = (event: React.SyntheticEvent): void => {
     event.preventDefault()
     console.log("sending message")
-    socket.emit("chatMessage", { message })
+    socket?.emit("chatMessage", { message })
     setMessage("")
   }
 

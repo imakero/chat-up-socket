@@ -1,28 +1,36 @@
 import React from "react"
 import ReactDOM from "react-dom/client"
-import App from "./App"
-import { io, Socket } from "socket.io-client"
-import {
-  ServerToClientEvents,
-  ClientToServerEvents,
-} from "@chat-up-socket/shared"
+import App from "./routes/App"
 import { ChakraProvider } from "@chakra-ui/react"
+import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import { SocketProvider } from "./context/SocketContext"
+import ErrorPage from "./routes/ErrorPage"
+import Login from "./routes/Login"
+import Register from "./routes/Register"
 
-const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(
-  "ws://localhost:4000",
+const router = createBrowserRouter([
   {
-    auth: {
-      token:
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzM2YmVjZDdmZDFmMTNmMjcyYjlhN2EiLCJ1c2VybmFtZSI6ImFjaGUiLCJpYXQiOjE2NjQ3ODY2MDksImV4cCI6MTY2NDg3MzAwOSwic3ViIjoiNjMzNmJlY2Q3ZmQxZjEzZjI3MmI5YTdhIn0.69Vj7SXsW6ZmsjEUeBfV5kMcdPGMeigRC227VLG8mGM",
-    },
-  }
-)
+    path: "/",
+    element: <App />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/register",
+    element: <Register />,
+  },
+])
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement)
 root.render(
   <React.StrictMode>
     <ChakraProvider>
-      <App socket={socket} />
+      <SocketProvider>
+        <RouterProvider router={router} />
+      </SocketProvider>
     </ChakraProvider>
   </React.StrictMode>
 )
