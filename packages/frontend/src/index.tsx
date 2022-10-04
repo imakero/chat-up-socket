@@ -7,6 +7,7 @@ import { SocketProvider } from "./context/SocketContext"
 import ErrorPage from "./routes/ErrorPage"
 import Login from "./routes/Login"
 import Register from "./routes/Register"
+import { UserProvider } from "./context/UserContext"
 
 const router = createBrowserRouter([
   {
@@ -29,7 +30,9 @@ root.render(
   <React.StrictMode>
     <ChakraProvider>
       <SocketProvider>
-        <RouterProvider router={router} />
+        <UserProvider>
+          <RouterProvider router={router} />
+        </UserProvider>
       </SocketProvider>
     </ChakraProvider>
   </React.StrictMode>

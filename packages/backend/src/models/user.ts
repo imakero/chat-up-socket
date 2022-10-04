@@ -42,6 +42,10 @@ export const createUser = async (user: User & Credentials): Promise<void> => {
   newUser.save()
 }
 
+export const findUserById = async (userId: string): Promise<User | null> => {
+  return UserModel.findById(userId)
+}
+
 export const performLogin = async (
   credentials: Credentials
 ): Promise<User & MongooseDocument> => {

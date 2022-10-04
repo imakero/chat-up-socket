@@ -12,7 +12,7 @@ export const generateToken = (user: User & MongooseDocument): string => {
     { userId, username: user.username },
     process.env.JWT_SECRET,
     {
-      expiresIn: "24 h",
+      expiresIn: "1800s",
       subject: userId,
     }
   )

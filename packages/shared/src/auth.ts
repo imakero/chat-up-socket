@@ -1,7 +1,11 @@
-export interface DecodedJwt {
-  userId: string
-  username: string
-  iat: number
-  exp: number
+import { Request } from "express"
+
+export interface JwtRequest extends Request {
+  jwt?: TokenPayload
+}
+
+export type TokenPayload = {
   sub: string
+  username: string
+  userId: string
 }

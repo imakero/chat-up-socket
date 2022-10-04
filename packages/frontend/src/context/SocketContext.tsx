@@ -10,14 +10,14 @@ const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(
   {
     auth: {
       token:
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzM2YmVjZDdmZDFmMTNmMjcyYjlhN2EiLCJ1c2VybmFtZSI6ImFjaGUiLCJpYXQiOjE2NjQ3ODY2MDksImV4cCI6MTY2NDg3MzAwOSwic3ViIjoiNjMzNmJlY2Q3ZmQxZjEzZjI3MmI5YTdhIn0.69Vj7SXsW6ZmsjEUeBfV5kMcdPGMeigRC227VLG8mGM",
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzM2YmVjZDdmZDFmMTNmMjcyYjlhN2EiLCJ1c2VybmFtZSI6ImFjaGUiLCJpYXQiOjE2NjQ4ODQ5ODksImV4cCI6MTY2NDg4Njc4OSwic3ViIjoiNjMzNmJlY2Q3ZmQxZjEzZjI3MmI5YTdhIn0.4q8eiP_uEc7YfLUZI5ZOhtDM7BC6gcS4QS8ZMRUsbds",
     },
   }
 )
 
-type SocketContextInterface = Socket<ServerToClientEvents, ClientToServerEvents>
+type SocketContextType = Socket<ServerToClientEvents, ClientToServerEvents>
 
-export const SocketContext = createContext<SocketContextInterface>(socket)
+export const SocketContext = createContext<SocketContextType>(socket)
 
 export const SocketProvider = ({ children }: React.PropsWithChildren) => {
   const socketRef = useRef(socket)

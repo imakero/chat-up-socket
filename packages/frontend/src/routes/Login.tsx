@@ -8,15 +8,30 @@ import {
   VStack,
 } from "@chakra-ui/react"
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import Link from "../components/Link"
+import { setAuthToken } from "../lib/auth"
 
 const Login = () => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
+  const navigate = useNavigate()
 
-  const handleSubmit: React.FormEventHandler = (event) => {
+  const handleSubmit: React.FormEventHandler = async (event) => {
     event.preventDefault()
-    console.log(username, password)
+    const res = await fetch("http://localhost:4000/api/1.0/auth/login", {
+      method: "POST",
+      body: JSON.stringify({
+        username,
+        password,
+      }),
+      headers: {
+        "Content-type": "application/json",
+      },
+    })
+    const { token } = await res.json()
+    setAuthToken(token)
+    navigate("/")
   }
 
   return (
@@ -49,7 +64,7 @@ const Login = () => {
           <Link to="/register" color="teal">
             register
           </Link>
-          ?{" "}
+          ?
         </Text>
         <Button colorScheme="pink" type="submit">
           Log in

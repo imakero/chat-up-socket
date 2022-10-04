@@ -1,4 +1,4 @@
-import { DecodedJwt, SocketMiddleware } from "@chat-up-socket/shared"
+import { TokenPayload, SocketMiddleware } from "@chat-up-socket/shared"
 import jwt from "jsonwebtoken"
 
 export const socketAuth: SocketMiddleware = (socket, next) => {
@@ -6,7 +6,7 @@ export const socketAuth: SocketMiddleware = (socket, next) => {
   if (token && process.env.JWT_SECRET) {
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET)
-      const { username, userId } = decoded as DecodedJwt
+      const { username, userId } = decoded as TokenPayload
       socket.data.user = { username, userId }
       next()
     } catch (error) {

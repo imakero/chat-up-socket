@@ -1,7 +1,5 @@
-import { Socket, Server } from "socket.io"
+import { Socket } from "socket.io"
 import { ExtendedError } from "socket.io/dist/namespace"
-import jwt from "jsonwebtoken"
-import { DecodedJwt } from "./auth"
 
 interface Message {
   message: string

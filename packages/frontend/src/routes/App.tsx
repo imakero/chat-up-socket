@@ -11,16 +11,27 @@ import {
   VStack,
 } from "@chakra-ui/react"
 import { useContext, useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { SocketContext } from "../context/SocketContext"
+import { UserContext } from "../context/UserContext"
 
 function App() {
+  const { user, loading } = useContext(UserContext)
   const [name, setName] = useState<string>("Anonymous")
   const [message, setMessage] = useState<string>("")
   const [messages, setMessages] = useState<string[]>([])
   const socket = useContext(SocketContext)
+  const navigate = useNavigate()
+
+  console.log("user is:", user)
+  console.log("loading is:", loading)
 
   useEffect(() => {
     console.log("running effect")
+
+    if (!loading && !user) {
+      navigate("/login")
+    }
 
     socket.on("chatMessage", ({ message }) => {
       setMessages((messages) => [...messages, message])
@@ -44,7 +55,7 @@ function App() {
       socket.off("connect_error")
       socket.offAny(anyListener)
     }
-  }, [socket])
+  }, [socket, loading, user, navigate])
 
   const handleSubmit = (event: React.SyntheticEvent): void => {
     event.preventDefault()
