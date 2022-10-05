@@ -11,7 +11,7 @@ export const socketAuth: SocketMiddleware = (socket, next) => {
       next()
     } catch (error) {
       if (error instanceof Error) {
-        console.log("There was an error decoding the token:", error.message)
+        console.error("There was an error decoding the token:", error.message)
       }
       next(new Error("Authentication error"))
     }

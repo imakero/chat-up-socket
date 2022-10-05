@@ -7,15 +7,17 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import Link from "../components/Link"
+import { UserContext } from "../context/UserContext"
 import { setAuthToken } from "../lib/auth"
 
 const Login = () => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const navigate = useNavigate()
+  const { setLoading } = useContext(UserContext)
 
   const handleSubmit: React.FormEventHandler = async (event) => {
     event.preventDefault()
@@ -31,6 +33,7 @@ const Login = () => {
     })
     const { token } = await res.json()
     setAuthToken(token)
+    setLoading && setLoading(true)
     navigate("/")
   }
 

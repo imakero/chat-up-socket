@@ -7,21 +7,27 @@ import { SocketProvider } from "./context/SocketContext"
 import ErrorPage from "./routes/ErrorPage"
 import Login from "./routes/Login"
 import Register from "./routes/Register"
-import { UserProvider } from "./context/UserContext"
+import Root from "./routes/Root"
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: "/login",
-    element: <Login />,
-  },
-  {
-    path: "/register",
-    element: <Register />,
+    element: <Root />,
+    children: [
+      {
+        index: true,
+        element: <App />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/register",
+        element: <Register />,
+      },
+    ],
   },
 ])
 
@@ -30,9 +36,7 @@ root.render(
   <React.StrictMode>
     <ChakraProvider>
       <SocketProvider>
-        <UserProvider>
-          <RouterProvider router={router} />
-        </UserProvider>
+        <RouterProvider router={router} />
       </SocketProvider>
     </ChakraProvider>
   </React.StrictMode>
