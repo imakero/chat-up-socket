@@ -7,6 +7,7 @@ import dotenv from "dotenv"
 import startChatServer from "./lib/socket.io/server"
 import { authenticateToken } from "./middleware/authenticateUser"
 import usersRouter from "./routers/users"
+import serversRouter from "./routers/servers"
 dotenv.config()
 
 const PORT: number = parseInt(process.env.SERVER_PORT || "3001")
@@ -27,8 +28,9 @@ app.use(cors())
 app.use(json())
 
 app.use("/api/1.0/auth", authRouter)
-app.use("/api/1.0/users", authenticateToken)
+app.use("/api/1.0/", authenticateToken)
 app.use("/api/1.0/users", usersRouter)
+app.use("/api/1.0/servers", serversRouter)
 
 server.listen(PORT, async () => {
   await setupDb(MONGODB_URL)

@@ -1,4 +1,9 @@
-import mongoose, { Document as MongooseDocument, Model } from "mongoose"
+import mongoose, {
+  Document as MongooseDocument,
+  HydratedDocument,
+  Model,
+  UpdateQuery,
+} from "mongoose"
 import bcrypt from "bcrypt"
 import { Credentials, User } from "@chat-up-socket/shared"
 
@@ -10,6 +15,7 @@ const UserSchema = new mongoose.Schema<User & Credentials, UserModel>({
   username: { type: String, required: true, unique: true, lowercase: true },
   email: { type: String, required: true, unique: true, lowercase: true },
   password: { type: String, required: true, select: false },
+  servers: [{ type: mongoose.Schema.Types.ObjectId, ref: "Server" }],
 })
 
 UserSchema.pre("save", async function (next) {
@@ -32,23 +38,32 @@ UserSchema.statics.login = async function ({
   }
 }
 
-const UserModel = mongoose.model<User & Credentials, UserModel>(
+export const UserModel = mongoose.model<User & Credentials, UserModel>(
   "User",
   UserSchema
 )
-
-export const createUser = async (user: User & Credentials): Promise<void> => {
-  const newUser = new UserModel(user)
-  newUser.save()
-}
-
-export const findUserById = async (userId: string): Promise<User | null> => {
-  return UserModel.findById(userId)
-}
 
 export const performLogin = async (
   credentials: Credentials
 ): Promise<User & MongooseDocument> => {
   const user = await UserModel.login(credentials)
   return user
+}
+
+export const createUser = async (user: User & Credentials): Promise<void> => {
+  const newUser = new UserModel(user)
+  newUser.save()
+}
+
+export const findUserById = async (
+  userId: string
+): Promise<HydratedDocument<User> | null> => {
+  return UserModel.findById(userId)
+}
+
+export const updateUser = async (
+  userId: string,
+  update: UpdateQuery<User>
+): Promise<HydratedDocument<User> | null> => {
+  return UserModel.findByIdAndUpdate(userId, update, { new: true })
 }

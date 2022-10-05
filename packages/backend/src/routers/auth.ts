@@ -11,7 +11,7 @@ authRouter.post<Empty, {}, User & Credentials, {}>(
   async (req, res) => {
     const { username, email, password } = req.body
     try {
-      await signupUser({ username, email, password })
+      await signupUser({ username, email, password, servers: [] })
       return res.sendStatus(201)
     } catch (e) {
       return res.sendStatus(400)
