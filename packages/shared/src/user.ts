@@ -1,11 +1,11 @@
-import { Model } from "mongoose"
+import { Server } from "./chat"
 
 export interface User {
   _id?: string
   username: string
   email: string
   password?: string
-  servers: []
+  servers: string[]
 }
 
 export interface Credentials {
