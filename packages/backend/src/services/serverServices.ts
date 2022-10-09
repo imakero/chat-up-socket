@@ -3,10 +3,10 @@ import { createServer } from "../models/server"
 import { findUserById, updateUser } from "../models/user"
 
 export const addNewServer = async (
-  server: Server,
+  name: string,
   userId: string
 ): Promise<Server> => {
-  const newServer = await createServer(server)
+  const newServer = await createServer({ name, owner: userId })
   await updateUser(userId, { $addToSet: { servers: newServer._id } })
   return newServer.toObject()
 }

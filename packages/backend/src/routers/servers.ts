@@ -10,7 +10,7 @@ serversRouter.post("/", async (req: JwtRequest<{}, {}, Server, {}>, res) => {
     // Using the bang operator to assure typescript that req.jwt exist
     // (if it didn't exist it would not have passed the authenticateToken
     // middleware).
-    const server = await addNewServer({ name }, req.jwt!.userId)
+    const server = await addNewServer(name, req.jwt!.userId)
     res.status(201).json(server)
   } catch (error) {
     res.sendStatus(400)

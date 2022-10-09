@@ -1,5 +1,6 @@
 export interface Server {
   name: string
+  owner: string
 }
 
 export interface Channel {
