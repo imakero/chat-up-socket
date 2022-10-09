@@ -1,6 +1,7 @@
 import { JwtRequest, Server } from "@chat-up-socket/shared"
 import { Router } from "express"
-import { addNewServer, findAllUserServers } from "../services/serverServices"
+import { addNewServer, findAllUserServers } from "../services/serversServices"
+import channelsRouter from "./channels"
 
 const serversRouter = Router()
 

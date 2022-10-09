@@ -1,5 +1,6 @@
-import { Server } from "@chat-up-socket/shared"
+import { Channel, Server } from "@chat-up-socket/shared"
 import mongoose, { HydratedDocument, Model } from "mongoose"
+import ChannelModel from "./channel"
 
 const ServerSchema = new mongoose.Schema(
   {
@@ -20,6 +21,18 @@ export const createServer = async (
   const newServer = new ServerModel(server)
   await newServer.save()
   return newServer
+}
+
+export const getServerChannels = async (
+  serverId: string
+): Promise<HydratedDocument<Channel>[]> => {
+  return await ChannelModel.find({ server: serverId })
+}
+
+export const findServerById = async (
+  serverId: string
+): Promise<HydratedDocument<Server> | null> => {
+  return await ServerModel.findById(serverId)
 }
 
 export default ServerModel
