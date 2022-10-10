@@ -26,4 +26,10 @@ export const createChannel = async (
   return newChannel
 }
 
+export const findChannelById = async (
+  channelId: string
+): Promise<HydratedDocument<Channel> | null> => {
+  return await ChannelModel.findById(channelId)
+}
+
 export default ChannelModel

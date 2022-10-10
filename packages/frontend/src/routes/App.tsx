@@ -28,8 +28,8 @@ function App() {
       socket.auth = { token: getAuthToken() }
       socket.connect()
 
-      socket.on("chatMessage", ({ message }) => {
-        setMessages((messages) => [...messages, message])
+      socket.on("chatMessage", (data) => {
+        setMessages((messages) => [...messages, data.text])
       })
 
       socket.on("connect_error", (error) => {
@@ -54,7 +54,11 @@ function App() {
 
   const handleSubmit = (event: React.SyntheticEvent): void => {
     event.preventDefault()
-    socket?.emit("chatMessage", { message })
+    socket?.emit("chatMessage", {
+      text: message,
+      userId: user?._id || "",
+      channelId: "6342a15cb8714fb8c6e7acda",
+    })
     setMessage("")
   }
 

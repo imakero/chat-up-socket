@@ -1,4 +1,5 @@
 export interface Server {
+  _id?: string
   name: string
   owner: string
 }
@@ -6,10 +7,4 @@ export interface Server {
 export interface Channel {
   name: string
   server: string
-}
-
-export interface Message {
-  text: string
-  user: string
-  channel: string
 }

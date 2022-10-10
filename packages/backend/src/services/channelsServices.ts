@@ -1,6 +1,6 @@
 import { Channel } from "@chat-up-socket/shared"
-import { createChannel } from "../models/channel"
-import ServerModel, { findServerById } from "../models/server"
+import { createChannel, findChannelById } from "../models/channel"
+import { findServerById } from "../models/server"
 
 export const addNewChannel = async (
   name: string,
@@ -15,4 +15,13 @@ export const addNewChannel = async (
     throw new Error("Only the owner can create new channels")
   }
   return (await createChannel({ name, server: serverId })).toObject()
+}
+
+export const getChannel = async (
+  channelId: string
+): Promise<Channel | null> => {
+  const channel = await findChannelById(channelId)
+  if (!channel) {
+    return null
+  } else return channel.toObject()
 }

@@ -1,8 +1,10 @@
 import { Socket } from "socket.io"
 import { ExtendedError } from "socket.io/dist/namespace"
 
-interface Message {
-  message: string
+export interface Message {
+  text: string
+  userId?: string
+  channelId: string
 }
 
 export interface ServerToClientEvents {
